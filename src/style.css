@@ -169,6 +169,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     font-size: 1.25rem;
     transition: opacity var(--transition-fast);
+    height: 100%;
 }
 
 .logo:hover {
@@ -176,7 +177,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logo__icon {
-    font-size: 1.5rem;
+    max-height: 100%;
 }
 
 .logo__text {
