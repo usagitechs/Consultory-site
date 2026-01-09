@@ -1,7 +1,9 @@
 /**
  * Usagitech - Corporate Website JavaScript
  * SPA Navigation, Animations, Modals, Form handling
- */
+**/
+
+import './style.css'
 
 (function() {
     'use strict';
