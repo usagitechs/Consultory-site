@@ -6,7 +6,7 @@
 // ============================================
 // DOM Elements
 // ============================================
-import './style.css'
+
 import app from './app.js'
 
 document.addEventListener('DOMContentLoaded', () => {
