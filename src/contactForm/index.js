@@ -136,7 +136,7 @@ export default function initContactForm(){
             const data = Object.fromEntries(formData.entries());
 
             // Basic validation
-            
+
             const nameError = validateName(data.name);
             if (nameError) {
                 showToast('warning', nameError);
@@ -168,7 +168,7 @@ export default function initContactForm(){
                 return;
             }
             const tokenError = validateToken(window.turnstileToken);
-            if (false) {
+            if (tokenError) {
                 showToast('warning', tokenError);
                 contactForm.querySelector('.cf-turnstile').scrollIntoView({ behavior: 'smooth', block: 'center' });
                 return;
