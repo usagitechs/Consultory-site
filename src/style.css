@@ -27,7 +27,7 @@
     
     --color-success: #22c55e;
     --color-warning: #f59e0b;
-    --color-error: #ef4444;
+    --color-danger: #ef4444;
     
     /* Typography */
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -1666,8 +1666,8 @@ h1, h2, h3, h4, h5, h6 {
 .toast__warning {
     color: var(--color-warning);
 }
-.toast__error {
-    color: var(--color-error);
+.toast__danger {
+    color: var(--color-danger);
 }
 
 .toast__icon {
