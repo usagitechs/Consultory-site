@@ -1,5 +1,5 @@
 // ============================================
-// Handle Browser Back/Forward
+// Handle Browser Back/Forward Navigation
 // ============================================
 
 import { smoothScrollTo } from "../scrollNavegation";
