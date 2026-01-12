@@ -199,7 +199,7 @@ export default function initContactForm(){
                         "name": data.name,
                         "email": data.email,
                         "message": data.message,
-                        "token": data.token,
+                        "token": window.turnstileToken,
                         "company": data.company,
                         "theme": data.service,
                     })
