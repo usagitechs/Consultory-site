@@ -192,7 +192,7 @@ export default function initContactForm(){
             `;
             
             try {
-                const response = await fetch('https://q7pf86s7k5.execute-api.us-east-1.amazonaws.com/prod/contact', {
+                const response = await fetch('https://5ieotlryzf.execute-api.us-east-1.amazonaws.com/contact', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
