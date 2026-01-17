@@ -1535,7 +1535,7 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateY(0);
 }
 
-.modal__close {
+.modal__close_btn  {
     position: absolute;
     top: var(--space-md);
     right: var(--space-md);
@@ -1552,7 +1552,7 @@ h1, h2, h3, h4, h5, h6 {
     transition: all var(--transition-fast);
 }
 
-.modal__close:hover {
+.modal__close_btn :hover {
     background: var(--color-surface-hover);
     color: var(--color-text);
 }

@@ -41,9 +41,11 @@ export function initModal(){
     
     modals.forEach(modal => {
         const overlay = modal.querySelector('.modal__overlay');
-        const closeBtn = modal.querySelector('.modal__close');
+        const closeBtn = modal.querySelectorAll('.modal__close');
     
         overlay.addEventListener('click', () => closeModal(modal));
-        closeBtn.addEventListener('click', () => closeModal(modal));
+        closeBtn.forEach((btn)=>{
+            btn.addEventListener('click', () => closeModal(modal));
+        });
     });
 }
