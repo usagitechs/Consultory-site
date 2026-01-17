@@ -137,12 +137,6 @@ export default function initContactForm(){
 
             // Basic validation
             
-            /*
-            type Request struct {
-
-            }
-            */
-            
             const nameError = validateName(data.name);
             if (nameError) {
                 showToast('warning', nameError);
@@ -192,7 +186,7 @@ export default function initContactForm(){
             `;
             
             try {
-                const response = await fetch('https://5ieotlryzf.execute-api.us-east-1.amazonaws.com/contact', {
+                const response = await fetch('https://api.usagiteks.com/contact', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
