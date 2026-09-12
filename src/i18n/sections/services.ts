@@ -17,6 +17,8 @@ export default {
     migracionesDesc: 'De on-premise a la nube o entre proveedores, sin interrupciones de servicio.',
     soporteTitle: 'Soporte & Consultoría',
     soporteDesc: 'Acompañamiento continuo y asesoría estratégica para tu equipo técnico.',
+    agentesTitle: 'Automatización con agentes de IA',
+    agentesDesc: 'Agentes que ejecutan tareas reales de desarrollo y operaciones: pipelines, revisiones, migraciones, documentación. Es como trabajamos nosotros: este sitio se construyó así en un día.',
   },
   en: {
     eyebrow: '01 — Services',
@@ -34,6 +36,8 @@ export default {
     migracionesDesc: 'From on-premise to the cloud or between providers, with zero service interruption.',
     soporteTitle: 'Support & Consulting',
     soporteDesc: 'Ongoing support and strategic advice for your technical team.',
+    agentesTitle: 'AI-agent automation',
+    agentesDesc: 'Agents that do real development and operations work: pipelines, reviews, migrations, documentation. It is how we work: this site was built that way in a day.',
   },
   pt: {
     eyebrow: '01 — Serviços',
@@ -51,6 +55,8 @@ export default {
     migracionesDesc: 'De on-premise para a nuvem ou entre provedores, sem interrupção do serviço.',
     soporteTitle: 'Suporte & Consultoria',
     soporteDesc: 'Acompanhamento contínuo e assessoria estratégica para o seu time técnico.',
+    agentesTitle: 'Automação com agentes de IA',
+    agentesDesc: 'Agentes que executam tarefas reais de desenvolvimento e operações: pipelines, revisões, migrações, documentação. É assim que trabalhamos: este site foi construído desse jeito em um dia.',
   },
 } satisfies Dict<
   | 'eyebrow'
@@ -66,4 +72,6 @@ export default {
   | 'migracionesDesc'
   | 'soporteTitle'
   | 'soporteDesc'
+  | 'agentesTitle'
+  | 'agentesDesc'
 >;
