@@ -93,9 +93,8 @@ const links = [
   :root[data-theme='light'] .theme-toggle__moon { display: none; }
   :root[data-theme='light'] .theme-toggle__sun { display: block; }
 
-  .burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; align-items: flex-end; }
-  .burger span { display: block; height: 2px; width: 22px; background: var(--text); transition: transform var(--ease), opacity var(--ease), width var(--ease); }
-  .burger span:nth-child(2) { width: 14px; }
+  .burger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; margin-right: -10px; border-radius: 8px; }
+  .burger span { display: block; height: 2px; width: 22px; border-radius: 2px; background: var(--heading); transition: transform var(--ease), opacity var(--ease); }
 
   @media (max-width: 1024px) {
     .header__inner { gap: 16px; }
@@ -111,16 +110,30 @@ const links = [
     .header__cta { display: none; }
     .header__lang { display: none; }
     .burger { display: flex; }
-    .nav { position: fixed; inset: 64px 0 0 0; display: flex; flex-direction: column; justify-content: space-between; padding: 32px var(--gutter) 40px; background: var(--bg); border-top: 1px solid var(--border); transform: translateX(100%); visibility: hidden; transition: transform 300ms ease, visibility 0s linear 300ms; overflow-y: auto; }
+    /* backdrop-filter turns the header into the containing block of fixed descendants on some engines:
+       drop it while the panel is open so the panel is always laid out against the viewport. */
+    .header.is-open { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--bg); }
+    .nav {
+      position: fixed; top: 64px; left: 0; right: 0;
+      height: calc(100vh - 64px);
+      height: calc(100dvh - 64px);
+      display: flex; flex-direction: column; justify-content: flex-start; gap: 28px;
+      padding: 28px var(--gutter) calc(32px + env(safe-area-inset-bottom, 0px));
+      background: var(--bg); border-top: 1px solid var(--border);
+      transform: translateX(100%); visibility: hidden;
+      transition: transform 300ms ease, visibility 0s linear 300ms;
+      overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+    }
     .header.is-open .nav { transform: none; visibility: visible; transition: transform 300ms ease; }
-    .nav__list { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .nav__link { display: block; padding: 12px 0; font-size: 22px; font-weight: 700; color: var(--heading); }
-    .nav__mobile-extra { display: flex; flex-direction: column; gap: 20px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .nav__list { flex-direction: column; align-items: stretch; gap: 0; }
+    .nav__list li { border-bottom: 1px solid var(--border); }
+    .nav__link { display: block; padding: 16px 0; font-size: 22px; font-weight: 700; color: var(--heading); }
+    .nav__mobile-extra { display: flex; flex-direction: column; gap: 16px; }
     .nav__mobile-extra .lang { gap: 8px; font-size: 14px; }
     .nav__mobile-extra .lang__item { padding: 10px 14px; }
     .nav__cta { width: 100%; min-height: 52px; }
     .header.is-open .burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .header.is-open .burger span:nth-child(2) { opacity: 0; }
-    .header.is-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); width: 22px; }
+    .header.is-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   }
 </style>
