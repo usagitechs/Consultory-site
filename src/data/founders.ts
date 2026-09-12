@@ -21,6 +21,6 @@ export const founders: Founder[] = [
     name: 'Guido Do Rego',
     initials: 'GD',
     linkedin: '',
-    skills: ['Python', 'Node.js', 'Web', 'Mobile', 'Linux', 'SQL'],
+    skills: ['Python', 'Go', 'TypeScript', 'Node.js', 'Bash', 'AWS', 'Web', 'Mobile', 'Linux', 'SQL'],
   },
 ];
