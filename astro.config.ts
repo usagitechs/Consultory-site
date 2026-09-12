@@ -1,14 +1,15 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { defaultLang, langTags, locales } from './src/i18n/config';
 
-// https://astro.build/config
+// Locales, default and BCP-47 tags live in src/i18n/config.ts; this file only wires them into Astro.
 export default defineConfig({
   site: 'https://usagiteks.com',
   output: 'static',
   trailingSlash: 'ignore',
   i18n: {
-    locales: ['es', 'en', 'pt'],
-    defaultLocale: 'es',
+    locales: [...locales],
+    defaultLocale: defaultLang,
     routing: {
       prefixDefaultLocale: false,
     },
@@ -16,8 +17,8 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: {
-        defaultLocale: 'es',
-        locales: { es: 'es-AR', en: 'en', pt: 'pt-BR' },
+        defaultLocale: defaultLang,
+        locales: { ...langTags },
       },
     }),
   ],

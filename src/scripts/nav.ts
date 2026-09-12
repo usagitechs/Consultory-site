@@ -22,9 +22,12 @@ function initMobileNav(header: HTMLElement) {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') setOpen(false);
   });
-  window.matchMedia('(min-width: 851px)').addEventListener('change', (e) => {
+  const desktop = window.matchMedia('(min-width: 851px)');
+  const onChange = (e: MediaQueryListEvent) => {
     if (e.matches) setOpen(false);
-  });
+  };
+  if (typeof desktop.addEventListener === 'function') desktop.addEventListener('change', onChange);
+  else desktop.addListener(onChange); // Safari < 14
 }
 
 function initActiveSection() {
@@ -75,3 +78,8 @@ if (header) {
 }
 initActiveSection();
 initReveal();
+
+// Static build: keep the footer year current between deploys.
+document.querySelectorAll<HTMLElement>('[data-year]').forEach((el) => {
+  el.textContent = String(new Date().getFullYear());
+});

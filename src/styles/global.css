@@ -125,9 +125,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 .card { border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); transition: border-color var(--ease), transform var(--ease); }
 .chip { display: inline-flex; align-items: center; font-family: var(--font-mono); font-size: 11px; padding: 4px 8px; border-radius: 4px; background: var(--chip); color: var(--text-2); }
 
-/* Scroll reveal (script adds .is-visible) */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity 500ms ease, transform 500ms ease; }
-.reveal.is-visible { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+/* Scroll reveal: only hides when the inline bootstrap marked <html class="js">, so content stays visible without JS. */
+.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 500ms ease, transform 500ms ease; }
+.js .reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1; transform: none; transition: none; } }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }

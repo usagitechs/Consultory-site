@@ -61,11 +61,8 @@ const ogImage = new URL('/og.png', site.url).href;
           ? saved
           : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
         document.documentElement.dataset.theme = theme;
+        document.documentElement.classList.add('js');
       })();
-    </script>
-    <script is:inline>
-      window.turnstileToken = null;
-      window.onTurnstileSuccess = function (token) { window.turnstileToken = token; };
     </script>
   </head>
   <body>
@@ -75,7 +72,6 @@ const ogImage = new URL('/og.png', site.url).href;
       <slot />
     </main>
     <Footer lang={lang} />
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
     <script>
       import '../scripts/theme';
       import '../scripts/nav';

@@ -9,33 +9,17 @@
  * in a test environment without a #contactForm element is a no-op.
  */
 
-import emailjs from '@emailjs/browser';
+import type contactDict from '../i18n/sections/contact';
 
 declare global {
   interface Window {
     turnstileToken: string | null;
+    turnstile?: { reset: (container?: string | HTMLElement) => void };
   }
 }
 
-export interface Messages {
-  errorNameRequired: string;
-  errorNameMin: string;
-  errorNameMax: string;
-  errorEmailRequired: string;
-  errorEmailInvalid: string;
-  errorEmailMax: string;
-  errorMessageRequired: string;
-  errorMessageMin: string;
-  errorMessageMax: string;
-  errorCompanyMax: string;
-  errorServiceInvalid: string;
-  errorTokenRequired: string;
-  errorTokenInvalid: string;
-  toastSuccess: string;
-  toastInternalError: string;
-  toastGenericError: string;
-  sendingLabel: string;
-}
+/** Runtime copy: the whole contact dictionary for the page's language (serialized by Contact.astro). */
+export type Messages = (typeof contactDict)['es'];
 
 type MaybeString = string | undefined | null;
 
@@ -122,7 +106,10 @@ async function sendWithEmailJs(form: HTMLFormElement, data: Record<string, strin
   if (!emailjsKey || !emailjsService || !emailjsTemplate) {
     throw new Error('EmailJS is not configured');
   }
-  emailjs.init({ publicKey: emailjsKey, blockHeadless: true, limitRate: { id: 'contact', throttle: 10_000 } });
+  // Loaded on demand so the 'api' build never ships the SDK. No client-side limitRate: it stamps
+  // localStorage before the request, so a retry after a network failure would be refused locally.
+  const { default: emailjs } = await import('@emailjs/browser');
+  emailjs.init({ publicKey: emailjsKey, blockHeadless: true });
   await emailjs.send(emailjsService, emailjsTemplate, {
     name: data.name,
     email: data.email,
@@ -278,6 +265,11 @@ function init(): void {
       showToast('danger', messages.toastGenericError);
       showFallback();
     } finally {
+      if (provider === 'api') {
+        // Turnstile tokens are single-use: ask for a fresh one before the next submit.
+        window.turnstileToken = null;
+        window.turnstile?.reset();
+      }
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalHtml;

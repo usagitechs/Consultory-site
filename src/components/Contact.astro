@@ -19,26 +19,8 @@ const serviceOptions = [
   { value: 'otro', label: t.serviceOtro },
 ];
 
-// Subset of the dict the client script needs at runtime (validation + toast copy).
-const messages = {
-  errorNameRequired: t.errorNameRequired,
-  errorNameMin: t.errorNameMin,
-  errorNameMax: t.errorNameMax,
-  errorEmailRequired: t.errorEmailRequired,
-  errorEmailInvalid: t.errorEmailInvalid,
-  errorEmailMax: t.errorEmailMax,
-  errorMessageRequired: t.errorMessageRequired,
-  errorMessageMin: t.errorMessageMin,
-  errorMessageMax: t.errorMessageMax,
-  errorCompanyMax: t.errorCompanyMax,
-  errorServiceInvalid: t.errorServiceInvalid,
-  errorTokenRequired: t.errorTokenRequired,
-  errorTokenInvalid: t.errorTokenInvalid,
-  toastSuccess: t.toastSuccess,
-  toastInternalError: t.toastInternalError,
-  toastGenericError: t.toastGenericError,
-  sendingLabel: t.sendingLabel,
-};
+// The client script reads the whole dictionary for this language (see Messages in contact-form.ts).
+const messages = t;
 ---
 
 <section id="contacto" class="section section--alt contact">
@@ -125,7 +107,7 @@ const messages = {
           {contactProvider === 'api' ? (
             <div class="contact__turnstile">
               <span class="contact__turnstile-note mono">{t.turnstileNote}</span>
-              <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey} data-callback="onTurnstileSuccess" data-theme="auto" />
+              <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey} data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-theme="auto" />
             </div>
           ) : (
             <span class="contact__turnstile-note mono">{t.privacyNote}</span>
@@ -154,6 +136,14 @@ const messages = {
   </div>
 </section>
 
+{contactProvider === 'api' && (
+  <script is:inline>
+    window.turnstileToken = null;
+    window.onTurnstileSuccess = function (token) { window.turnstileToken = token; };
+    window.onTurnstileExpired = function () { window.turnstileToken = null; };
+  </script>
+)}
+{contactProvider === 'api' && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>}
 <script is:inline type="application/json" id="contactI18n" set:html={JSON.stringify(messages)} />
 
 <script>

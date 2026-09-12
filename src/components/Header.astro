@@ -22,7 +22,7 @@ const links = [
       <span class="logo__text">{site.name}</span>
     </a>
 
-    <nav class="nav" data-nav aria-label="Principal">
+    <nav id="site-nav" class="nav" data-nav aria-label="Principal">
       <ul class="nav__list">
         {links.map((l) => (
           <li><a class="nav__link" href={l.href}>{l.label}</a></li>
@@ -57,7 +57,7 @@ const links = [
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
       </a>
 
-      <button class="burger" type="button" data-nav-toggle aria-label={t.menu} aria-expanded="false" aria-controls="header">
+      <button class="burger" type="button" data-nav-toggle aria-label={t.menu} aria-expanded="false" aria-controls="site-nav">
         <span></span><span></span><span></span>
       </button>
     </div>
