@@ -1,10 +1,11 @@
-allowBuilds:
-  esbuild: set this to true or false
 # pnpm settings (single package; no workspace members).
 # Supply-chain hardening:
 #   - minimumReleaseAge: never install a version published less than 24 h ago,
 #     so a hijacked release gets caught by the ecosystem before it reaches us.
 #   - onlyBuiltDependencies: no dependency may run install scripts unless listed here.
+#   - ignoredBuiltDependencies: explicit decision for packages that ask to run scripts.
 #     esbuild ships prebuilt binaries as optional deps, so its postinstall is not needed.
 minimumReleaseAge: 1440
 onlyBuiltDependencies: []
+ignoredBuiltDependencies:
+  - esbuild
