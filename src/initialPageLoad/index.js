@@ -1,8 +1,7 @@
 // ============================================
 // Initial Page Load
 // ============================================
-import updateActiveNavLink from "../sectionDetection";
-import { detectActiveSection } from "../sectionDetection";
+import { updateActiveNavLink, detectActiveSection } from "../sectionDetection";
 import { smoothScrollTo } from "../scrollNavegation";
 
 export default function initInitialPageLoad(){
@@ -33,7 +32,6 @@ export default function initInitialPageLoad(){
         `;
         document.head.appendChild(style);
 
-        console.log('Usagitech website initialized');
     }
 
     // Run on DOM ready

@@ -203,7 +203,7 @@ export default function initContactForm(){
                     contactForm.reset();
 
                 } else if(response.status >= 500){
-                    showToast('error', 'Error interno. Por favor intentá de nuevo más tarde');
+                    showToast('danger', 'Error interno. Por favor, intentá de nuevo más tarde.');
 
                 } else {
                     throw new Error('Request error');

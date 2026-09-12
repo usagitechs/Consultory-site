@@ -1,9 +1,7 @@
-// vite.config.js
 import { defineConfig } from 'vite'
 
+// Served from the custom domain https://usagiteks.com, so assets resolve from the root.
+// If the site ever moves back to usagitechs.github.io/Consultory-site/, set base: '/Consultory-site/'.
 export default defineConfig({
-  // GitHub Pages para repo "Consultory-site":
-  // https://usagitechs.github.io/Consultory-site/
-  // La base debe ser "/Consultory-site/" para que los assets resuelvan bien.
   base: '/',
 })
