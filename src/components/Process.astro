@@ -1,0 +1,134 @@
+---
+import type { Lang } from '../i18n/config';
+import dict from '../i18n/sections/process';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = dict[lang];
+
+const steps = [
+  { number: '01', title: t.step1Title, desc: t.step1Desc },
+  { number: '02', title: t.step2Title, desc: t.step2Desc },
+  { number: '03', title: t.step3Title, desc: t.step3Desc },
+  { number: '04', title: t.step4Title, desc: t.step4Desc },
+];
+---
+
+<section id="proceso" class="section section--alt process">
+  <div class="container">
+    <div class="process__header">
+      <span class="eyebrow">{t.eyebrow}</span>
+      <h2 class="section-title">{t.title}</h2>
+      <p class="section-lead">{t.lead}</p>
+    </div>
+
+    <div class="process__grid">
+      {
+        steps.map((step) => (
+          <div class="process__step reveal">
+            <span class="mono process__number">{step.number}</span>
+            <h3 class="process__title">{step.title}</h3>
+            <p class="process__desc">{step.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .process__header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 720px;
+    margin-bottom: 56px;
+  }
+
+  .process__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--border-strong);
+  }
+
+  .process__step {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 32px 28px 0 28px;
+    border-right: 1px solid var(--border-strong);
+  }
+
+  .process__step:first-child {
+    padding-left: 0;
+  }
+
+  .process__step:last-child {
+    padding-right: 0;
+    border-right: none;
+  }
+
+  .process__number {
+    font-size: 13px;
+    color: var(--accent-text);
+  }
+
+  .process__title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--heading);
+  }
+
+  .process__desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-2);
+  }
+
+  @media (max-width: 1024px) {
+    .process__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .process__step {
+      border-right: 1px solid var(--border-strong);
+      border-bottom: 1px solid var(--border-strong);
+      padding: 28px;
+    }
+
+    .process__step:nth-child(2n) {
+      border-right: none;
+    }
+
+    .process__step:first-child,
+    .process__step:last-child {
+      padding: 28px;
+    }
+  }
+
+  @media (max-width: 850px) {
+    .process__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .process__step {
+      border-right: none;
+      border-bottom: 1px solid var(--border-strong);
+      padding: 24px 0;
+    }
+
+    .process__step:first-child,
+    .process__step:last-child {
+      padding: 24px 0;
+    }
+
+    .process__step:last-child {
+      border-bottom: none;
+    }
+  }
+</style>

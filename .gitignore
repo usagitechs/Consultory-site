@@ -24,3 +24,9 @@ dist-ssr
 *.sw?
 .claude/*
 files-md/*
+# Astro
+.astro
+
+# Local env
+.env
+.env.local

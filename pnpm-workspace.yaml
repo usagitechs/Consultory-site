@@ -1,0 +1,9 @@
+# pnpm settings (single package; no workspace members).
+# Supply-chain hardening:
+#   - minimumReleaseAge: never install a version published less than 24 h ago,
+#     so a hijacked release gets caught by the ecosystem before it reaches us.
+#   - allowBuilds: install scripts are blocked unless a package is explicitly set to true here.
+#     esbuild ships prebuilt binaries as optional deps, so its postinstall is denied on purpose.
+minimumReleaseAge: 1440
+allowBuilds:
+  esbuild: false

@@ -1,0 +1,133 @@
+/* usagiteks — design tokens (direction A) and base styles.
+   Dark is the default; [data-theme="light"] swaps the palette. */
+
+:root {
+  color-scheme: dark;
+  --bg: #07090f;
+  --bg-alt: #0a0e16;
+  --surface: #0d111a;
+  --chip: #131826;
+  --border: rgba(148, 163, 184, 0.14);
+  --border-strong: rgba(148, 163, 184, 0.22);
+  --text: #e6e9f0;
+  --heading: #f4f6fa;
+  --text-2: #a3abbd;
+  --muted: #7b849b;
+  --accent: #22d3ee;          /* fills: buttons, dots */
+  --accent-text: #22d3ee;     /* text and icons on background */
+  --accent-soft: rgba(34, 211, 238, 0.14);
+  --accent-border: rgba(34, 211, 238, 0.28);
+  --violet: #8b5cf6;
+  --violet-text: #a78bfa;
+  --violet-soft: rgba(139, 92, 246, 0.16);
+  --violet-border: rgba(139, 92, 246, 0.28);
+  --on-accent: #06141a;
+  --gradient-text: linear-gradient(90deg, #22d3ee, #8b5cf6);
+  --glow: radial-gradient(closest-side, rgba(34, 211, 238, 0.14), rgba(139, 92, 246, 0.06) 55%, transparent 75%);
+  --grid-line: rgba(148, 163, 184, 0.05);
+  --card-tint: rgba(13, 17, 26, 0.6);
+  --shadow-card: 0 30px 80px rgba(0, 0, 0, 0.5);
+  --shadow-btn: 0 0 0 1px rgba(34, 211, 238, 0.4), 0 12px 40px rgba(34, 211, 238, 0.22);
+  --input-bg: #07090f;
+  --placeholder: #4b5468;
+
+  /* Terminal card: always dark, in both themes */
+  --term-bg: linear-gradient(180deg, #0d111a, #0a0e16);
+  --term-border: rgba(148, 163, 184, 0.16);
+  --term-text: #c4cad8;
+  --term-muted: #6f7890;
+  --term-dot: #2a3040;
+  --term-heading: #f4f6fa;
+
+  --font-sans: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Fira Code', monospace;
+
+  --container: 1200px;
+  --gutter: clamp(20px, 6vw, 120px);
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --header-h: 76px;
+  --ease: 250ms ease;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f7f8fb;
+  --bg-alt: #eef1f6;
+  --surface: #ffffff;
+  --chip: #eef1f6;
+  --border: rgba(15, 23, 42, 0.14);
+  --border-strong: rgba(15, 23, 42, 0.22);
+  --text: #1a2030;
+  --heading: #0f1420;
+  --text-2: #4f5868;
+  --muted: #5f6879;
+  --accent-text: #0b7a97;
+  --accent-border: rgba(11, 122, 151, 0.35);
+  --violet-text: #7c3aed;
+  --gradient-text: linear-gradient(90deg, #0891b2, #7c3aed);
+  --glow: radial-gradient(closest-side, rgba(34, 211, 238, 0.22), rgba(139, 92, 246, 0.10) 55%, transparent 75%);
+  --grid-line: rgba(15, 23, 42, 0.05);
+  --card-tint: rgba(255, 255, 255, 0.7);
+  --shadow-card: 0 30px 80px rgba(15, 23, 42, 0.25);
+  --input-bg: #f7f8fb;
+  --placeholder: #8b95a7;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); overflow-x: clip; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color var(--ease), color var(--ease);
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: var(--accent-text); text-decoration: none; }
+a:hover { color: var(--heading); }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+h1, h2, h3, h4, p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* Layout */
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+.section { position: relative; padding-block: clamp(72px, 9vw, 120px); }
+.section--alt { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+/* Type */
+.eyebrow { font-family: var(--font-mono); font-size: 13px; color: var(--accent-text); letter-spacing: 0.02em; }
+.section-title { font-size: clamp(32px, 4vw, 48px); line-height: 1.08; font-weight: 800; letter-spacing: -0.03em; color: var(--heading); text-wrap: balance; }
+.section-lead { font-size: 17px; line-height: 1.55; color: var(--text-2); text-wrap: pretty; }
+.text-gradient { background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mono { font-family: var(--font-mono); }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 14px 24px; border-radius: var(--radius); font-size: 15px; font-weight: 700; transition: transform var(--ease), box-shadow var(--ease), background-color var(--ease), border-color var(--ease); }
+.btn:hover { transform: translateY(-1px); }
+.btn--primary { background: var(--accent); color: var(--on-accent); box-shadow: var(--shadow-btn); }
+.btn--primary:hover { color: var(--on-accent); }
+.btn--ghost { border: 1px solid var(--border-strong); color: var(--text); font-weight: 600; }
+.btn--ghost:hover { border-color: var(--accent-text); color: var(--heading); }
+.btn--lg { min-height: 54px; padding: 16px 26px; font-size: 16px; }
+
+/* Cards and chips */
+.card { border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); transition: border-color var(--ease), transform var(--ease); }
+.chip { display: inline-flex; align-items: center; font-family: var(--font-mono); font-size: 11px; padding: 4px 8px; border-radius: 4px; background: var(--chip); color: var(--text-2); }
+
+/* Scroll reveal: only hides when the inline bootstrap marked <html class="js">, so content stays visible without JS. */
+.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 500ms ease, transform 500ms ease; }
+.js .reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1; transform: none; transition: none; } }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }

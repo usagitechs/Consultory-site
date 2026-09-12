@@ -1,0 +1,232 @@
+---
+import type { Lang } from '../i18n/config';
+import dict from '../i18n/sections/services';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = dict[lang];
+---
+
+<section id="servicios" class="section services">
+  <div class="container">
+    <div class="services__header">
+      <div class="services__heading">
+        <span class="eyebrow">{t.eyebrow}</span>
+        <h2 class="section-title">{t.title}</h2>
+      </div>
+      <p class="section-lead services__lead">{t.lead}</p>
+    </div>
+
+    <div class="services__grid">
+      <a class="card service-card service-card--large service-card--cyan reveal" href="#contacto" data-service="devops">
+        <span class="service-card__icon service-card__icon--cyan" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"></path><path d="M12 18v3"></path><circle cx="12" cy="12" r="3"></circle><path d="M5 7l2.5 1.5"></path><path d="M19 17l-2.5-1.5"></path><path d="M5 17l2.5-1.5"></path><path d="M19 7l-2.5 1.5"></path></svg>
+        </span>
+        <div class="service-card__body">
+          <h3 class="service-card__title service-card__title--lg">{t.devopsTitle}</h3>
+          <p class="service-card__desc">{t.devopsDesc}</p>
+        </div>
+      </a>
+
+      <a class="card service-card service-card--large service-card--violet reveal" href="#contacto" data-service="cloud">
+        <span class="service-card__icon service-card__icon--violet" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A7 7 0 0 0 4.7 12.3 3.5 3.5 0 0 0 6 19h11.5z"></path></svg>
+        </span>
+        <div class="service-card__body">
+          <h3 class="service-card__title service-card__title--lg">{t.cloudTitle}</h3>
+          <p class="service-card__desc">{t.cloudDesc}</p>
+        </div>
+      </a>
+
+      <a class="card service-card service-card--small reveal" href="#contacto" data-service="desarrollo">
+        <span class="service-card__icon-inline" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l-4 3 4 3"></path><path d="M16 9l4 3-4 3"></path><path d="M14 5l-4 14"></path></svg>
+        </span>
+        <div class="service-card__body">
+          <h3 class="service-card__title">{t.desarrolloTitle}</h3>
+          <p class="service-card__desc">{t.desarrolloDesc}</p>
+        </div>
+      </a>
+
+      <a class="card service-card service-card--small reveal" href="#contacto" data-service="migraciones">
+        <span class="service-card__icon-inline" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h11"></path><path d="M12 3l4 4-4 4"></path><path d="M20 17H9"></path><path d="M12 13l-4 4 4 4"></path></svg>
+        </span>
+        <div class="service-card__body">
+          <h3 class="service-card__title">{t.migracionesTitle}</h3>
+          <p class="service-card__desc">{t.migracionesDesc}</p>
+        </div>
+      </a>
+
+      <a class="card service-card service-card--small reveal" href="#contacto" data-service="soporte">
+        <span class="service-card__icon-inline" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z"></path><path d="M12 8v4l3 2"></path></svg>
+        </span>
+        <div class="service-card__body">
+          <h3 class="service-card__title">{t.soporteTitle}</h3>
+          <p class="service-card__desc">{t.soporteDesc}</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services__header {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 32px;
+    align-items: end;
+    margin-bottom: 56px;
+  }
+
+  .services__heading {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .services__lead {
+    grid-column: 9 / span 4;
+  }
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+  }
+
+  .service-card:hover {
+    border-color: var(--accent-border);
+    transform: translateY(-2px);
+  }
+
+  .service-card--large {
+    grid-column: span 3;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 32px;
+    min-height: 300px;
+  }
+
+  .service-card--cyan {
+    border-color: var(--accent-border);
+    background: linear-gradient(160deg, var(--accent-soft), var(--card-tint) 60%);
+  }
+
+  .service-card--violet {
+    border-color: var(--violet-border);
+    background: linear-gradient(160deg, var(--violet-soft), var(--card-tint) 60%);
+  }
+
+  .service-card--small {
+    grid-column: span 2;
+    gap: 24px;
+    padding: 28px;
+    background: var(--surface);
+  }
+
+  .service-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+
+  .service-card__icon--cyan {
+    background: var(--accent-soft);
+    color: var(--accent-text);
+  }
+
+  .service-card__icon--violet {
+    background: var(--violet-soft);
+    color: var(--violet-text);
+  }
+
+  .service-card__icon-inline {
+    color: var(--accent-text);
+  }
+
+  .service-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .service-card--small .service-card__body {
+    gap: 8px;
+  }
+
+  .service-card__title {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--heading);
+  }
+
+  .service-card__title--lg {
+    font-size: 24px;
+  }
+
+  .service-card__desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-2);
+  }
+
+  .service-card--small .service-card__desc {
+    font-size: 14px;
+  }
+
+  @media (max-width: 1024px) {
+    .services__header {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .services__heading,
+    .services__lead {
+      grid-column: auto;
+    }
+
+    .services__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .service-card--large {
+      grid-column: span 2;
+    }
+
+    .service-card--small {
+      grid-column: span 1;
+    }
+  }
+
+  @media (max-width: 850px) {
+    .services__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-card--large,
+    .service-card--small {
+      grid-column: span 1;
+      padding: 22px;
+    }
+
+    .service-card__title--lg {
+      font-size: 20px;
+    }
+  }
+</style>

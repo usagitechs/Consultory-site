@@ -1,0 +1,43 @@
+import type { Dict } from '../config';
+
+export default {
+  es: {
+    services: 'Servicios',
+    process: 'Proceso',
+    about: 'Nosotros',
+    contact: 'Contacto',
+    cta: 'Hablemos',
+    menu: 'Abrir menú',
+    closeMenu: 'Cerrar menú',
+    theme: 'Cambiar tema',
+    language: 'Idioma',
+    skip: 'Ir al contenido',
+    footerRights: 'Buenos Aires, Argentina',
+  },
+  en: {
+    services: 'Services',
+    process: 'Process',
+    about: 'About',
+    contact: 'Contact',
+    cta: "Let's talk",
+    menu: 'Open menu',
+    closeMenu: 'Close menu',
+    theme: 'Toggle theme',
+    language: 'Language',
+    skip: 'Skip to content',
+    footerRights: 'Buenos Aires, Argentina',
+  },
+  pt: {
+    services: 'Serviços',
+    process: 'Processo',
+    about: 'Sobre nós',
+    contact: 'Contato',
+    cta: 'Vamos conversar',
+    menu: 'Abrir menu',
+    closeMenu: 'Fechar menu',
+    theme: 'Alternar tema',
+    language: 'Idioma',
+    skip: 'Ir para o conteúdo',
+    footerRights: 'Buenos Aires, Argentina',
+  },
+} satisfies Dict<'services' | 'process' | 'about' | 'contact' | 'cta' | 'menu' | 'closeMenu' | 'theme' | 'language' | 'skip' | 'footerRights'>;
