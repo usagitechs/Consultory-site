@@ -1,7 +1,7 @@
 ---
 import type { Lang } from '../i18n/config';
 import dict from '../i18n/sections/contact';
-import { site } from '../data/site';
+import { site, contactProvider } from '../data/site';
 
 interface Props {
   lang: Lang;
@@ -73,7 +73,22 @@ const messages = {
     </div>
 
     <div class="card contact__panel">
-      <form id="contactForm" class="contact__form" novalidate data-api={site.contactApi}>
+      <form
+        id="contactForm"
+        class="contact__form"
+        novalidate
+        data-provider={contactProvider}
+        data-api={site.contactApi}
+        data-emailjs-key={site.emailjs.publicKey}
+        data-emailjs-service={site.emailjs.serviceId}
+        data-emailjs-template={site.emailjs.templateId}
+        data-lang={lang}
+      >
+        <!-- Honeypot: humans never see it; bots that fill it are dropped silently. -->
+        <div class="hp" aria-hidden="true">
+          <label for="contact-website">Website</label>
+          <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
         <div class="contact__fields">
           <div class="field">
             <label for="contact-name">{t.labelName}</label>
@@ -107,10 +122,14 @@ const messages = {
         </div>
 
         <div class="contact__footer">
-          <div class="contact__turnstile">
-            <span class="contact__turnstile-note mono">{t.turnstileNote}</span>
-            <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey} data-callback="onTurnstileSuccess" data-theme="auto" />
-          </div>
+          {contactProvider === 'api' ? (
+            <div class="contact__turnstile">
+              <span class="contact__turnstile-note mono">{t.turnstileNote}</span>
+              <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey} data-callback="onTurnstileSuccess" data-theme="auto" />
+            </div>
+          ) : (
+            <span class="contact__turnstile-note mono">{t.privacyNote}</span>
+          )}
           <button type="submit" class="btn btn--primary">
             {t.submitLabel}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -142,6 +161,7 @@ const messages = {
 </script>
 
 <style>
+  .hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
   .contact__grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));

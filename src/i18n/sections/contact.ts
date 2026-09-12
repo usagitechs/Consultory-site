@@ -2,6 +2,7 @@ import type { Dict } from '../config';
 
 export default {
   es: {
+    privacyNote: 'Solo usamos tus datos para responderte.',
     eyebrow: '04 — Contacto',
     title: 'Hablemos de tu proyecto',
     lead: 'Contanos qué tenés entre manos. Respondemos en menos de 24 horas hábiles con una primera lectura honesta.',
@@ -44,6 +45,7 @@ export default {
     sendingLabel: 'Enviando...',
   },
   en: {
+    privacyNote: 'We only use your details to reply to you.',
     eyebrow: '04 — Contact',
     title: "Let's talk about your project",
     lead: "Tell us what you're working on. We respond within 24 business hours with an honest first take.",
@@ -86,6 +88,7 @@ export default {
     sendingLabel: 'Sending...',
   },
   pt: {
+    privacyNote: 'Usamos seus dados apenas para responder a você.',
     eyebrow: '04 — Contato',
     title: 'Vamos falar sobre o seu projeto',
     lead: 'Conte pra gente o que você tem em mente. Respondemos em até 24 horas úteis com uma primeira leitura honesta.',
@@ -128,6 +131,7 @@ export default {
     sendingLabel: 'Enviando...',
   },
 } satisfies Dict<
+  | 'privacyNote'
   | 'eyebrow'
   | 'title'
   | 'lead'

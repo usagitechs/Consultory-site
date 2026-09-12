@@ -62,4 +62,13 @@ Cada sección tiene su diccionario en `src/i18n/sections/`. Agregá la clave en 
 
 ## Formulario de contacto
 
+Dos proveedores, elegidos en build según las variables de entorno (ver `.env.example`):
+
+| Proveedor | Cuándo | Cómo |
+|---|---|---|
+| **EmailJS** | Si `PUBLIC_EMAILJS_PUBLIC_KEY`, `PUBLIC_EMAILJS_SERVICE_ID` y `PUBLIC_EMAILJS_TEMPLATE_ID` están seteadas | El navegador envía por EmailJS; sin backend. Anti-spam: honeypot + rate limit del SDK. En Actions salen de las *repository variables* `EMAILJS_*` |
+| **API** | Si falta alguna | `POST` al endpoint de `contact-api` con token de Turnstile verificado en el servidor |
+
+La plantilla de EmailJS recibe `name`, `email`, `company`, `service`, `message`, `lang` y `page`.
+
 La validación del front replica las reglas del backend: nombre 2–100, email válido hasta 254, mensaje 10–2000, empresa hasta 100, servicio hasta 50, token de Turnstile obligatorio. Si el envío falla, el sitio muestra el email de contacto como alternativa.

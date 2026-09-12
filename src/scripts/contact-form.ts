@@ -9,6 +9,8 @@
  * in a test environment without a #contactForm element is a no-op.
  */
 
+import emailjs from '@emailjs/browser';
+
 declare global {
   interface Window {
     turnstileToken: string | null;
@@ -114,6 +116,24 @@ function readMessages(): Messages | null {
   }
 }
 
+/** Browser-side send through EmailJS. Template variables: name, email, company, service, message, lang, page. */
+async function sendWithEmailJs(form: HTMLFormElement, data: Record<string, string>): Promise<void> {
+  const { emailjsKey, emailjsService, emailjsTemplate } = form.dataset;
+  if (!emailjsKey || !emailjsService || !emailjsTemplate) {
+    throw new Error('EmailJS is not configured');
+  }
+  emailjs.init({ publicKey: emailjsKey, blockHeadless: true, limitRate: { id: 'contact', throttle: 10_000 } });
+  await emailjs.send(emailjsService, emailjsTemplate, {
+    name: data.name,
+    email: data.email,
+    company: data.company || '-',
+    service: data.service || '-',
+    message: data.message,
+    lang: form.dataset.lang ?? '',
+    page: window.location.href,
+  });
+}
+
 function init(): void {
   const form = document.getElementById('contactForm') as HTMLFormElement | null;
   if (!form) return;
@@ -195,11 +215,22 @@ function init(): void {
       return;
     }
 
-    const tokenError = validateToken(window.turnstileToken, messages);
-    if (tokenError) {
-      showToast('warning', tokenError);
-      turnstileWrapper?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const provider = form.dataset.provider === 'emailjs' ? 'emailjs' : 'api';
+
+    // Honeypot: a filled hidden field means a bot. Pretend success and drop it.
+    if ((data.website ?? '').trim() !== '') {
+      showToast('success', messages.toastSuccess);
+      form.reset();
       return;
+    }
+
+    if (provider === 'api') {
+      const tokenError = validateToken(window.turnstileToken, messages);
+      if (tokenError) {
+        showToast('warning', tokenError);
+        turnstileWrapper?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
     }
 
     const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
@@ -210,6 +241,14 @@ function init(): void {
     }
 
     try {
+      if (provider === 'emailjs') {
+        await sendWithEmailJs(form, data);
+        showToast('success', messages.toastSuccess);
+        form.reset();
+        hideFallback();
+        return;
+      }
+
       const response = await fetch(form.dataset.api ?? '', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

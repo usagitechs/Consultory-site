@@ -26,3 +26,7 @@ dist-ssr
 files-md/*
 # Astro
 .astro
+
+# Local env
+.env
+.env.local
