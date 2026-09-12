@@ -1,45 +1,54 @@
 # usagiteks.com
 
-Sitio corporativo de **usagiteks**, consultora IT especializada en DevOps, arquitectura cloud en AWS y desarrollo de software. Single page estática, sin framework ni dependencias de runtime.
+Sitio corporativo de **usagiteks**, consultora IT especializada en DevOps, arquitectura cloud multi-proveedor (AWS, Azure, GCP, OCI) y desarrollo de software. Sitio estático trilingüe (español, inglés, portugués) con tema claro/oscuro.
 
-Producción: <https://usagiteks.com> (GitHub Pages, dominio propio).
+Producción: <https://usagiteks.com> · `/en/` · `/pt/` (GitHub Pages, dominio propio).
 
 ## Stack
 
 | Capa | Tecnología |
 |---|---|
-| Build / dev server | [Vite](https://vite.dev) 7 |
-| Front | HTML5 + CSS3 (custom properties) + JavaScript ES modules, sin frameworks |
+| Framework | [Astro](https://astro.build) 7, salida estática, i18n routing nativo |
+| Estilos | CSS puro con design tokens en `src/styles/global.css` (`:root` oscuro, `[data-theme=light]` claro) |
+| Scripts | TypeScript vanilla (`src/scripts/`), sin framework de UI |
+| i18n | Un diccionario por sección en `src/i18n/sections/*.ts`, mismas claves en `es`/`en`/`pt` (verificado por test) |
+| SEO | Una URL por idioma con `hreflang`, canonical, Open Graph y sitemap (`@astrojs/sitemap`) |
 | Tests | [Vitest](https://vitest.dev) 4 + jsdom |
-| Anti-spam del formulario | Cloudflare Turnstile |
-| Backend del formulario | `POST https://api.usagiteks.com/contact` — repo `usagitechs/contact-api` (Go, AWS Lambda) |
-| CI/CD | GitHub Actions → GitHub Pages |
+| Anti-spam | Cloudflare Turnstile |
+| Backend del formulario | `POST https://api.usagiteks.com/contact` (repo privado `usagitechs/contact-api`, Go + AWS Lambda). Configurable con `PUBLIC_CONTACT_API` |
+| CI/CD | GitHub Actions → GitHub Pages, actions pineadas por SHA, Dependabot semanal |
 
 ## Desarrollo
 
 Requiere Node.js 22 o superior (`.nvmrc` fija 24).
 
 ```bash
-npm ci          # instalar dependencias
-npm run dev     # http://localhost:5173
-npm test        # tests en modo watch (npm test -- --run para una sola corrida)
-npm run build   # genera dist/
-npm run preview # sirve dist/ localmente
+npm ci            # dependencias
+npm run dev       # http://localhost:4321
+npm test -- --run # tests (sin --run queda en modo watch)
+npm run build     # genera dist/
+npm run preview   # sirve dist/
 ```
 
 ## Estructura
 
 ```
-index.html                 Marcado completo del sitio (secciones + modales)
-public/style.css           Estilos globales; tokens de diseño en :root
-public/logo.png            Logo
-src/main.js                Entry point: arranca app() al cargar el DOM
-src/app.js                 Orquestador: inicializa cada módulo
-src/<feature>/index.js     Un módulo por comportamiento (form, modales, scroll, FAQ...)
-src/__tests__/             Tests unitarios (jsdom)
-.github/workflows/ci.yml   CI en pull requests: test + build
-.github/workflows/deploy.yml  Deploy a Pages en cada push a main
+astro.config.mjs            site, i18n (es por defecto sin prefijo; /en/, /pt/), sitemap
+src/pages/                  index.astro, en/index.astro, pt/index.astro → <Landing lang=... />
+src/components/Landing.astro  Orden de secciones
+src/layouts/Base.astro      <head> (meta por idioma, hreflang, OG, fuentes), bootstrap del tema, Turnstile, header y footer
+src/components/             Header, Hero, StackStrip, Services, Process, About, Contact, Footer
+src/i18n/                   config.ts (locales), utils.ts (rutas), sections/*.ts (textos)
+src/data/                   site.ts (contacto, stack), founders.ts (perfiles)
+src/scripts/                theme.ts, nav.ts, contact-form.ts
+src/styles/global.css       Tokens y estilos base
+src/__tests__/              i18n (claves completas), validación del formulario
+public/                     logo, favicon, og.png, CNAME
 ```
+
+## Cómo agregar o cambiar textos
+
+Cada sección tiene su diccionario en `src/i18n/sections/`. Agregá la clave en los tres idiomas; el test `i18n.test.ts` falla si falta alguna. Los perfiles de los fundadores (nombre, skills, LinkedIn) están en `src/data/founders.ts`; el link a LinkedIn aparece solo si la URL no está vacía.
 
 ## Flujo de trabajo
 
@@ -47,12 +56,6 @@ src/__tests__/             Tests unitarios (jsdom)
 2. `CI` corre tests y build sobre la PR. `main` está protegida: solo se mergea con CI en verde y revisión.
 3. Al mergear, `Deploy` vuelve a testear, construye y publica a GitHub Pages.
 
-Las actions están pineadas por SHA de commit y Dependabot propone actualizaciones semanales de actions y dependencias.
-
 ## Formulario de contacto
 
-La validación del front replica las reglas del backend (`contact-api`): nombre 2–100, email válido hasta 254, mensaje 10–2000, empresa hasta 100, servicio hasta 50, token de Turnstile obligatorio. Respuestas: `200` enviado, `400` JSON inválido, `422` validación/captcha, `500` interno.
-
-## Documentación adicional
-
-`DOCUMENTACION.md` es una referencia extendida generada al inicio del proyecto y contiene partes desactualizadas; ante cualquier diferencia manda el código y este README.
+La validación del front replica las reglas del backend: nombre 2–100, email válido hasta 254, mensaje 10–2000, empresa hasta 100, servicio hasta 50, token de Turnstile obligatorio. Si el envío falla, el sitio muestra el email de contacto como alternativa.

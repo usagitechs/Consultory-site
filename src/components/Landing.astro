@@ -1,0 +1,21 @@
+---
+import type { Lang } from '../i18n/config';
+import Base from '../layouts/Base.astro';
+import Hero from './Hero.astro';
+import StackStrip from './StackStrip.astro';
+import Services from './Services.astro';
+import Process from './Process.astro';
+import About from './About.astro';
+import Contact from './Contact.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<Base lang={lang}>
+  <Hero lang={lang} />
+  <StackStrip lang={lang} />
+  <Services lang={lang} />
+  <Process lang={lang} />
+  <About lang={lang} />
+  <Contact lang={lang} />
+</Base>

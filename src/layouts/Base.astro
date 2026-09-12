@@ -1,0 +1,89 @@
+---
+import '../styles/global.css';
+import type { Lang } from '../i18n/config';
+import { langTags, defaultLang } from '../i18n/config';
+import { alternates, localizedPath } from '../i18n/utils';
+import meta from '../i18n/sections/meta';
+import nav from '../i18n/sections/nav';
+import { site } from '../data/site';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = meta[lang];
+const n = nav[lang];
+const canonical = new URL(localizedPath(lang), site.url).href;
+const ogImage = new URL('/og.png', site.url).href;
+---
+<!doctype html>
+<html lang={langTags[lang]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.title}</title>
+    <meta name="description" content={t.description} />
+    <meta name="author" content={site.name} />
+    <link rel="canonical" href={canonical} />
+    {alternates().map((a) => (
+      <link rel="alternate" hreflang={langTags[a.lang]} href={new URL(a.href, site.url).href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(localizedPath(defaultLang), site.url).href} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={t.ogTitle} />
+    <meta property="og:description" content={t.ogDescription} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={langTags[lang].replace('-', '_')} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#07090f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f8fb" media="(prefers-color-scheme: light)" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Apply the saved or system theme before first paint to avoid a flash. -->
+    <script is:inline>
+      (function () {
+        var saved = null;
+        try { saved = localStorage.getItem('usagiteks-theme'); } catch (e) {}
+        var theme = saved === 'light' || saved === 'dark'
+          ? saved
+          : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    <script is:inline>
+      window.turnstileToken = null;
+      window.onTurnstileSuccess = function (token) { window.turnstileToken = token; };
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#inicio">{n.skip}</a>
+    <Header lang={lang} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
+    <script>
+      import '../scripts/theme';
+      import '../scripts/nav';
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip-link { position: absolute; left: 16px; top: -60px; z-index: 100; padding: 10px 14px; border-radius: 8px; background: var(--accent); color: var(--on-accent); font-weight: 700; }
+  .skip-link:focus { top: 16px; }
+</style>

@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 .claude/*
 files-md/*
+# Astro
+.astro

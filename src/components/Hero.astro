@@ -1,0 +1,387 @@
+---
+import type { Lang } from '../i18n/config';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+import dict from '../i18n/sections/hero';
+const t = dict[lang];
+---
+<section id="inicio" class="hero">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__grid-bg" aria-hidden="true"></div>
+
+  <div class="container hero__container">
+    <div class="hero__content">
+      <p class="eyebrow hero__eyebrow">
+        <span class="hero__dot" aria-hidden="true"></span>
+        {t.eyebrow}
+      </p>
+
+      <h1 class="hero__title">
+        {t.title} <span class="text-gradient">{t.titleAccent}</span>
+      </h1>
+
+      <p class="hero__subtitle">{t.subtitle}</p>
+
+      <div class="hero__ctas">
+        <a class="btn btn--primary btn--lg" href="#contacto">
+          {t.ctaPrimary}
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"></path>
+            <path d="M13 6l6 6-6 6"></path>
+          </svg>
+        </a>
+        <a class="btn btn--ghost btn--lg" href="#proceso">{t.ctaSecondary}</a>
+      </div>
+
+      <ul class="hero__checks">
+        <li>
+          <svg class="hero__check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 6L9 17l-5-5"></path>
+          </svg>
+          {t.check1}
+        </li>
+        <li>
+          <svg class="hero__check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 6L9 17l-5-5"></path>
+          </svg>
+          {t.check2}
+        </li>
+        <li>
+          <svg class="hero__check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 6L9 17l-5-5"></path>
+          </svg>
+          {t.check3}
+        </li>
+      </ul>
+    </div>
+
+    <!-- pipeline card: illustrative UI, always in English, always dark (--term-* tokens) -->
+    <div class="hero__card reveal">
+      <div class="hero__card-header">
+        <span class="hero__card-dot"></span>
+        <span class="hero__card-dot"></span>
+        <span class="hero__card-dot"></span>
+        <span class="hero__card-label">pipeline · prod</span>
+      </div>
+      <div class="hero__card-body">
+        <div class="hero__card-row">
+          <span class="hero__card-icon hero__card-icon--ok">✓</span>
+          <span>terraform plan</span>
+          <span class="hero__card-meta">12 to add, 0 to destroy</span>
+        </div>
+        <div class="hero__card-row">
+          <span class="hero__card-icon hero__card-icon--ok">✓</span>
+          <span>build &amp; test</span>
+          <span class="hero__card-meta">142 passed · 38s</span>
+        </div>
+        <div class="hero__card-row">
+          <span class="hero__card-icon hero__card-icon--ok">✓</span>
+          <span>docker push</span>
+          <span class="hero__card-meta">ecr · arm64</span>
+        </div>
+        <div class="hero__card-row">
+          <span class="hero__card-icon hero__card-icon--running">◐</span>
+          <span>deploy canary 10%</span>
+          <span class="hero__card-meta hero__card-meta--running">running</span>
+        </div>
+        <div class="hero__card-row hero__card-row--pending">
+          <span class="hero__card-icon">○</span>
+          <span>promote 100%</span>
+          <span class="hero__card-meta">waiting for SLO</span>
+        </div>
+
+        <div class="hero__card-divider"></div>
+
+        <div class="hero__card-metrics">
+          <div class="hero__metric">
+            <span class="hero__metric-label">p95 latency</span>
+            <span class="hero__metric-value">184 ms</span>
+          </div>
+          <div class="hero__metric">
+            <span class="hero__metric-label">error rate</span>
+            <span class="hero__metric-value">0.02 %</span>
+          </div>
+          <div class="hero__metric">
+            <span class="hero__metric-label">rollback</span>
+            <span class="hero__metric-value hero__metric-value--accent">auto</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero__glow {
+    position: absolute;
+    top: -220px;
+    left: 50%;
+    width: 900px;
+    height: 700px;
+    border-radius: 50%;
+    background: var(--glow);
+    pointer-events: none;
+    transform: translateX(0);
+  }
+
+  .hero__grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 900px);
+    pointer-events: none;
+  }
+
+  .hero__container {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 32px;
+    align-items: center;
+    padding-block: 112px 96px;
+  }
+
+  .hero__content {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero__dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  .hero__title {
+    font-size: clamp(2.125rem, 1.5rem + 3vw, 4.5rem);
+    line-height: 1.02;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    color: var(--heading);
+    text-wrap: balance; overflow-wrap: anywhere; }
+
+  .hero__subtitle {
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--text-2);
+    max-width: 600px;
+    text-wrap: pretty;
+  }
+
+  .hero__ctas {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+  .hero__checks {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .hero__checks li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero__check-icon {
+    color: var(--accent-text);
+    flex-shrink: 0;
+  }
+
+  /* pipeline card: always dark, uses --term-* tokens regardless of theme */
+  .hero__card {
+    grid-column: span 5;
+    display: flex;
+    flex-direction: column;
+    border-radius: 14px;
+    border: 1px solid var(--term-border);
+    background: var(--term-bg);
+    box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+  }
+
+  .hero__card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--term-border);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--term-muted);
+  }
+
+  .hero__card-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--term-dot);
+  }
+
+  .hero__card-label {
+    margin-left: 8px;
+  }
+
+  .hero__card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 20px 22px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--term-text);
+  }
+
+  .hero__card-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .hero__card-row--pending {
+    opacity: 0.45;
+  }
+
+  .hero__card-icon--ok {
+    color: var(--accent-text);
+  }
+
+  .hero__card-icon--running {
+    color: var(--violet-text);
+  }
+
+  .hero__card-meta {
+    margin-left: auto;
+    color: var(--term-muted);
+  }
+
+  .hero__card-meta--running {
+    color: var(--violet-text);
+  }
+
+  .hero__card-divider {
+    height: 1px;
+    background: var(--term-border);
+    margin: 6px 0;
+  }
+
+  .hero__card-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .hero__metric {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hero__metric-label {
+    font-size: 11px;
+    color: var(--term-muted);
+  }
+
+  .hero__metric-value {
+    font-size: 18px;
+    color: var(--term-heading);
+    font-weight: 500;
+  }
+
+  .hero__metric-value--accent {
+    color: var(--accent-text);
+  }
+
+  @media (max-width: 1024px) {
+    .hero__container {
+      grid-template-columns: 1fr;
+      padding-block: 80px 64px;
+    }
+
+    .hero__content {
+      grid-column: auto;
+    }
+
+    .hero__card {
+      grid-column: auto;
+      max-width: 560px;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero__container {
+      padding-block: 56px 40px;
+      gap: 20px;
+    }
+
+    .hero__subtitle {
+      font-size: 16px;
+    }
+
+    .hero__ctas {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .hero__ctas .btn {
+      min-height: 52px;
+      width: 100%;
+    }
+
+    .hero__checks {
+      gap: 16px;
+      row-gap: 10px;
+    }
+
+    .hero__card-header {
+      padding: 10px 14px;
+      font-size: 11px;
+    }
+
+    .hero__card-dot {
+      width: 8px;
+      height: 8px;
+    }
+
+    .hero__card-body {
+      padding: 14px;
+      font-size: 12px;
+      gap: 8px;
+    }
+
+    .hero__metric-value {
+      font-size: 16px;
+    }
+  }
+</style>
