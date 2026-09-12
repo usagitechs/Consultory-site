@@ -18,7 +18,7 @@ export default {
     soporteTitle: 'Soporte & Consultoría',
     soporteDesc: 'Acompañamiento continuo y asesoría estratégica para tu equipo técnico.',
     agentesTitle: 'Automatización con agentes de IA',
-    agentesDesc: 'Agentes que ejecutan tareas reales de desarrollo y operaciones: pipelines, revisiones, migraciones, documentación. Es como trabajamos nosotros: este sitio se construyó así en un día.',
+    agentesDesc: 'Agentes de IA integrados a tus flujos de desarrollo y operaciones: pipelines, revisiones de código, migraciones y documentación, con supervisión humana y resultados medibles.',
   },
   en: {
     eyebrow: '01 — Services',
@@ -37,7 +37,7 @@ export default {
     soporteTitle: 'Support & Consulting',
     soporteDesc: 'Ongoing support and strategic advice for your technical team.',
     agentesTitle: 'AI-agent automation',
-    agentesDesc: 'Agents that do real development and operations work: pipelines, reviews, migrations, documentation. It is how we work: this site was built that way in a day.',
+    agentesDesc: 'AI agents integrated into your development and operations workflows: pipelines, code reviews, migrations and documentation, with human oversight and measurable results.',
   },
   pt: {
     eyebrow: '01 — Serviços',
@@ -56,7 +56,7 @@ export default {
     soporteTitle: 'Suporte & Consultoria',
     soporteDesc: 'Acompanhamento contínuo e assessoria estratégica para o seu time técnico.',
     agentesTitle: 'Automação com agentes de IA',
-    agentesDesc: 'Agentes que executam tarefas reais de desenvolvimento e operações: pipelines, revisões, migrações, documentação. É assim que trabalhamos: este site foi construído desse jeito em um dia.',
+    agentesDesc: 'Agentes de IA integrados aos seus fluxos de desenvolvimento e operações: pipelines, revisões de código, migrações e documentação, com supervisão humana e resultados mensuráveis.',
   },
 } satisfies Dict<
   | 'eyebrow'
