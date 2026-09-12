@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   build:
-    name: Test & build
+    name: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

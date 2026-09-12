@@ -57,7 +57,7 @@ Cada sección tiene su diccionario en `src/i18n/sections/`. Agregá la clave en 
 ## Flujo de trabajo
 
 1. Rama desde `main`, cambios, PR.
-2. `CI` corre tests y build sobre la PR. `main` está protegida: solo se mergea con CI en verde y revisión.
+2. `CI` corre tests y build sobre la PR. `main` está protegida por un ruleset: solo se mergea con el check `build` en verde.
 3. Al mergear, `Deploy` vuelve a testear, construye y publica a GitHub Pages.
 
 ## Formulario de contacto
