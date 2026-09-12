@@ -116,7 +116,7 @@ function readMessages(): Messages | null {
   }
 }
 
-/** Browser-side send through EmailJS. Template variables: name, email, company, service, message, lang, page. */
+/** Browser-side send through EmailJS. Template variables: name, email, company, service, message, lang, page, time. */
 async function sendWithEmailJs(form: HTMLFormElement, data: Record<string, string>): Promise<void> {
   const { emailjsKey, emailjsService, emailjsTemplate } = form.dataset;
   if (!emailjsKey || !emailjsService || !emailjsTemplate) {
@@ -131,6 +131,7 @@ async function sendWithEmailJs(form: HTMLFormElement, data: Record<string, strin
     message: data.message,
     lang: form.dataset.lang ?? '',
     page: window.location.href,
+    time: new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' }),
   });
 }
 
