@@ -12,7 +12,7 @@
   --text: #e6e9f0;
   --heading: #f4f6fa;
   --text-2: #a3abbd;
-  --muted: #6f7890;
+  --muted: #7b849b;
   --accent: #22d3ee;          /* fills: buttons, dots */
   --accent-text: #22d3ee;     /* text and icons on background */
   --accent-soft: rgba(34, 211, 238, 0.14);
@@ -62,9 +62,9 @@
   --text: #1a2030;
   --heading: #0f1420;
   --text-2: #4f5868;
-  --muted: #6b7486;
-  --accent-text: #0e8fb0;
-  --accent-border: rgba(14, 143, 176, 0.35);
+  --muted: #5f6879;
+  --accent-text: #0b7a97;
+  --accent-border: rgba(11, 122, 151, 0.35);
   --violet-text: #7c3aed;
   --gradient-text: linear-gradient(90deg, #0891b2, #7c3aed);
   --glow: radial-gradient(closest-side, rgba(34, 211, 238, 0.22), rgba(139, 92, 246, 0.10) 55%, transparent 75%);
