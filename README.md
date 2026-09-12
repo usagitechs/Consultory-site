@@ -18,6 +18,10 @@ Producción: <https://usagiteks.com> · `/en/` · `/pt/` (GitHub Pages, dominio 
 | Backend del formulario | `POST https://api.usagiteks.com/contact` (repo privado `usagitechs/contact-api`, Go + AWS Lambda). Configurable con `PUBLIC_CONTACT_API` |
 | CI/CD | GitHub Actions → GitHub Pages, actions pineadas por SHA, Dependabot semanal |
 
+## Arquitectura
+
+Diagrama interactivo en [`docs/arquitectura.html`](docs/arquitectura.html) (fuente: `docs/arquitectura.archify.json`, generado con Archify): entrega continua, sitio estático y camino del formulario de contacto.
+
 ## Desarrollo
 
 Requiere Node.js 22 o superior (`.nvmrc` fija 24).

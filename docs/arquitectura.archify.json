@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "usagiteks.com — arquitectura",
+    "output": "arquitectura.html",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "entrega",
+        "label": "Entrega continua",
+        "focus": [
+          "repo",
+          "ci",
+          "deploy",
+          "pages"
+        ],
+        "note": "Cada PR corre tests y build; cada push a main publica a GitHub Pages."
+      },
+      {
+        "id": "sitio",
+        "label": "Sitio estático",
+        "focus": [
+          "visitante",
+          "pages"
+        ],
+        "note": "Astro genera /, /en/ y /pt/ con hreflang; el tema claro/oscuro vive en el navegador."
+      },
+      {
+        "id": "contacto",
+        "label": "Formulario de contacto",
+        "focus": [
+          "visitante",
+          "apigw",
+          "lambda",
+          "turnstile",
+          "ses",
+          "inbox"
+        ],
+        "note": "Camino real del formulario. Hoy no funciona: la cuenta de AWS está deshabilitada."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "repo",
+      "type": "external",
+      "label": "usagitechs/Consultory-site",
+      "sublabel": "repo público · Astro 7",
+      "brand": "github",
+      "pos": [
+        250,
+        60
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "ci",
+      "type": "backend",
+      "label": "Actions · CI",
+      "sublabel": "pull_request · test + build",
+      "pos": [
+        520,
+        60
+      ],
+      "size": [
+        170,
+        64
+      ],
+      "tag": "SHA pinned"
+    },
+    {
+      "id": "deploy",
+      "type": "backend",
+      "label": "Actions · Deploy",
+      "sublabel": "push main · build + pages",
+      "pos": [
+        770,
+        60
+      ],
+      "size": [
+        170,
+        64
+      ],
+      "tag": "env github-pages"
+    },
+    {
+      "id": "visitante",
+      "type": "external",
+      "label": "Visitante",
+      "sublabel": "navegador · es / en / pt",
+      "pos": [
+        40,
+        190
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "pages",
+      "type": "cloud",
+      "label": "GitHub Pages",
+      "sublabel": "usagiteks.com · HTTPS",
+      "brand": "github",
+      "pos": [
+        770,
+        190
+      ],
+      "size": [
+        170,
+        64
+      ],
+      "tag": "CNAME"
+    },
+    {
+      "id": "apigw",
+      "type": "cloud",
+      "label": "API Gateway",
+      "sublabel": "api.usagiteks.com",
+      "pos": [
+        250,
+        330
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "tag": "caído"
+    },
+    {
+      "id": "lambda",
+      "type": "backend",
+      "label": "contact-api",
+      "sublabel": "Lambda Go · ARM64",
+      "pos": [
+        520,
+        330
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "ses",
+      "type": "cloud",
+      "label": "Amazon SES",
+      "sublabel": "SendEmail",
+      "pos": [
+        770,
+        330
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "inbox",
+      "type": "external",
+      "label": "usagiteks@gmail.com",
+      "sublabel": "bandeja del equipo",
+      "pos": [
+        1020,
+        330
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "turnstile",
+      "type": "security",
+      "label": "Cloudflare Turnstile",
+      "sublabel": "siteverify",
+      "brand": "cloudflare",
+      "pos": [
+        520,
+        470
+      ],
+      "size": [
+        170,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "GitHub",
+      "wraps": [
+        "repo",
+        "ci",
+        "deploy",
+        "pages"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "AWS us-east-1 · cuenta deshabilitada",
+      "wraps": [
+        "apigw",
+        "lambda",
+        "ses",
+        "turnstile"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "repo-ci",
+      "from": "repo",
+      "to": "ci",
+      "label": "PR"
+    },
+    {
+      "id": "ci-deploy",
+      "from": "ci",
+      "to": "deploy",
+      "label": "merge a main"
+    },
+    {
+      "id": "deploy-pages",
+      "from": "deploy",
+      "to": "pages",
+      "label": "artifact dist/",
+      "variant": "emphasis",
+      "labelAt": [
+        925,
+        152
+      ]
+    },
+    {
+      "id": "visita",
+      "from": "visitante",
+      "to": "pages",
+      "label": "GET / · /en/ · /pt/",
+      "variant": "emphasis"
+    },
+    {
+      "id": "post-contact",
+      "from": "visitante",
+      "to": "apigw",
+      "label": "POST /contact + token",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "via": [
+        [
+          115,
+          362
+        ]
+      ]
+    },
+    {
+      "id": "invoke",
+      "from": "apigw",
+      "to": "lambda",
+      "label": "invoke"
+    },
+    {
+      "id": "verify",
+      "from": "lambda",
+      "to": "turnstile",
+      "label": "verifica token",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "send",
+      "from": "lambda",
+      "to": "ses",
+      "label": "email"
+    },
+    {
+      "id": "deliver",
+      "from": "ses",
+      "to": "inbox"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Entrega",
+      "items": [
+        "CI en cada PR: tests (Vitest) + build (Astro)",
+        "Deploy solo desde main, actions pineadas por SHA",
+        "Dependabot semanal para actions y npm"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Sitio",
+      "items": [
+        "Astro estático: una URL por idioma con hreflang y sitemap",
+        "Tema claro/oscuro guardado en localStorage",
+        "Sin frameworks de UI, ~64 KB de HTML + CSS por página"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Contacto (hoy)",
+      "items": [
+        "api.usagiteks.com apunta a un API Gateway que ya no existe",
+        "El sitio muestra el email como alternativa si el envío falla",
+        "Decisión pendiente: reactivar AWS o mover a Cloudflare Workers"
+      ]
+    }
+  ]
+}
