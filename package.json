@@ -17,11 +17,13 @@
     "vitest": "^4.0.17"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22",
+    "pnpm": ">=10"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "@emailjs/browser": "^4.4.1",
     "astro": "^7.3.2"
-  }
+  },
+  "packageManager": "pnpm@12.4.1"
 }

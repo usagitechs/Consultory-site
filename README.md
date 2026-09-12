@@ -16,6 +16,7 @@ Producción: <https://usagiteks.com> · `/en/` · `/pt/` (GitHub Pages, dominio 
 | Tests | [Vitest](https://vitest.dev) 4 + jsdom |
 | Anti-spam | Cloudflare Turnstile |
 | Backend del formulario | `POST https://api.usagiteks.com/contact` (repo privado `usagitechs/contact-api`, Go + AWS Lambda). Configurable con `PUBLIC_CONTACT_API` |
+| Paquetes | pnpm con lockfile congelado, scripts de instalación bloqueados y cuarentena de 24 h para versiones nuevas |
 | CI/CD | GitHub Actions → GitHub Pages, actions pineadas por SHA, Dependabot semanal |
 
 ## Arquitectura
@@ -24,15 +25,17 @@ Diagrama interactivo en [`docs/arquitectura.html`](docs/arquitectura.html) (fuen
 
 ## Desarrollo
 
-Requiere Node.js 22 o superior (`.nvmrc` fija 24).
+Requiere Node.js 22 o superior (`.nvmrc` fija 24) y **pnpm** (`corepack enable` lo instala en la versión fijada en `package.json`).
 
 ```bash
-npm ci            # dependencias
-npm run dev       # http://localhost:4321
-npm test -- --run # tests (sin --run queda en modo watch)
-npm run build     # genera dist/
-npm run preview   # sirve dist/
+pnpm install       # dependencias (respeta pnpm-lock.yaml)
+pnpm dev           # http://localhost:4321
+pnpm test -- --run # tests (sin --run queda en modo watch)
+pnpm build         # genera dist/
+pnpm preview       # sirve dist/
 ```
+
+Por qué pnpm: `node_modules` estricto (sin dependencias fantasma), ningún paquete ejecuta scripts de instalación salvo que esté en `onlyBuiltDependencies`, y `minimumReleaseAge` evita instalar versiones publicadas hace menos de 24 h.
 
 ## Estructura
 
