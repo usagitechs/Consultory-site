@@ -22,6 +22,7 @@ export default {
     serviceDesarrollo: 'Desarrollo de Software',
     serviceMigraciones: 'Migraciones',
     serviceSoporte: 'Soporte & Consultoría',
+    serviceAgentes: 'Agentes de IA',
     serviceOtro: 'Otro',
     submitLabel: 'Enviar mensaje',
     turnstileNote: 'Protegido con Cloudflare Turnstile',
@@ -65,6 +66,7 @@ export default {
     serviceDesarrollo: 'Software Development',
     serviceMigraciones: 'Migrations',
     serviceSoporte: 'Support & Consulting',
+    serviceAgentes: 'AI agents',
     serviceOtro: 'Other',
     submitLabel: 'Send message',
     turnstileNote: 'Protected by Cloudflare Turnstile',
@@ -108,6 +110,7 @@ export default {
     serviceDesarrollo: 'Desenvolvimento de Software',
     serviceMigraciones: 'Migrações',
     serviceSoporte: 'Suporte & Consultoria',
+    serviceAgentes: 'Agentes de IA',
     serviceOtro: 'Outro',
     submitLabel: 'Enviar mensagem',
     turnstileNote: 'Protegido pelo Cloudflare Turnstile',
@@ -151,6 +154,7 @@ export default {
   | 'serviceDesarrollo'
   | 'serviceMigraciones'
   | 'serviceSoporte'
+  | 'serviceAgentes'
   | 'serviceOtro'
   | 'submitLabel'
   | 'turnstileNote'
