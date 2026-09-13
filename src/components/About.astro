@@ -14,11 +14,11 @@ const roleFor = (key: Founder['key']) => (key === 'lucas' ? t.roleLucas : t.role
 const bioFor = (key: Founder['key']) => (key === 'lucas' ? t.bioLucas : t.bioGuido);
 ---
 
-<section id="nosotros" class="section about">
+<section id="nosotros" class="section about" aria-labelledby="nosotros-title">
   <div class="container about__grid">
     <div class="about__intro">
       <span class="eyebrow">{t.eyebrow}</span>
-      <h2 class="section-title">{t.title}</h2>
+      <h2 id="nosotros-title" class="section-title">{t.title}</h2>
       <p class="section-lead">{t.lead}</p>
       <div class="about__values">
         <div class="about__value"><span class="about__arrow mono">→</span>{t.value1}</div>

@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import { localizedPath } from '../i18n/utils';
+// GitHub Pages serves this file for any unknown path, in every language, so the copy is trilingual.
+---
+<Base lang="es">
+  <section class="section notfound">
+    <div class="container">
+      <span class="eyebrow">404</span>
+      <h1 class="section-title">Esta página no existe</h1>
+      <p class="section-lead">This page doesn't exist · Esta página não existe.</p>
+      <div class="notfound__links">
+        <a class="btn btn--primary" href={localizedPath('es')} hreflang="es">Ir al inicio</a>
+        <a class="btn btn--ghost" href={localizedPath('en')} hreflang="en">Go to the English site</a>
+        <a class="btn btn--ghost" href={localizedPath('pt')} hreflang="pt">Ir para o site em português</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .notfound { min-height: 60vh; display: flex; align-items: center; }
+  .notfound .container { display: flex; flex-direction: column; gap: 16px; }
+  .notfound__links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+</style>

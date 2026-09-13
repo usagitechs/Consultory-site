@@ -9,7 +9,7 @@ function current(): Theme {
 function apply(theme: Theme) {
   document.documentElement.dataset.theme = theme;
   document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((btn) => {
-    btn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+    btn.setAttribute('aria-checked', theme === 'light' ? 'true' : 'false');
   });
 }
 

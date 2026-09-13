@@ -29,7 +29,8 @@
   --shadow-card: 0 30px 80px rgba(0, 0, 0, 0.5);
   --shadow-btn: 0 0 0 1px rgba(34, 211, 238, 0.4), 0 12px 40px rgba(34, 211, 238, 0.22);
   --input-bg: #07090f;
-  --placeholder: #4b5468;
+  --placeholder: #7a8499;
+  --focus: #22d3ee;
 
   /* Terminal card: always dark, in both themes */
   --term-bg: linear-gradient(180deg, #0d111a, #0a0e16);
@@ -39,8 +40,8 @@
   --term-dot: #2a3040;
   --term-heading: #f4f6fa;
 
-  --font-sans: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'Fira Code', monospace;
+  --font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'Fira Code', monospace;
 
   --container: 1200px;
   --gutter: clamp(20px, 6vw, 120px);
@@ -72,7 +73,8 @@
   --card-tint: rgba(255, 255, 255, 0.7);
   --shadow-card: 0 30px 80px rgba(15, 23, 42, 0.25);
   --input-bg: #f7f8fb;
-  --placeholder: #8b95a7;
+  --placeholder: #626b7d;
+  --focus: #0b7a97;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -98,7 +100,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 h1, h2, h3, h4, p { margin: 0; }
 ul { margin: 0; padding: 0; list-style: none; }
 
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+
+/* Mobile menu open: lock the page behind the panel (iOS included). */
+body.nav-open { overflow: hidden; overscroll-behavior: contain; }
+
+/* Inline field errors (contact form). */
+.field__error { margin: 6px 0 0; font-size: 13px; color: var(--danger, #ef4444); }
+.field__error[hidden] { display: none; }
 
 /* Layout */
 .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }

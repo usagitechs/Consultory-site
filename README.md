@@ -9,10 +9,11 @@ Producción: <https://usagiteks.com> · `/en/` · `/pt/` (GitHub Pages, dominio 
 | Capa | Tecnología |
 |---|---|
 | Framework | [Astro](https://astro.build) 7, salida estática, i18n routing nativo |
-| Estilos | CSS puro con design tokens en `src/styles/global.css` (`:root` oscuro, `[data-theme=light]` claro) |
+| Estilos | CSS puro con design tokens en `src/styles/global.css` (`:root` oscuro, `[data-theme=light]` claro). Fuentes autoalojadas (`@fontsource-variable`), sin pedidos a Google |
 | Scripts | TypeScript vanilla (`src/scripts/`), sin framework de UI |
 | i18n | Un diccionario por sección en `src/i18n/sections/*.ts`, mismas claves en `es`/`en`/`pt` (verificado por test) |
-| SEO | Una URL por idioma con `hreflang`, canonical, Open Graph y sitemap (`@astrojs/sitemap`) |
+| SEO | Una URL por idioma con `hreflang`, canonical, Open Graph, sitemap (`@astrojs/sitemap`) y página 404 propia |
+| Seguridad | CSP por `<meta>` (Pages no permite headers), scripts inline por hash, `referrer` estricto, variables de entorno tipadas con `astro:env` |
 | Tests | [Vitest](https://vitest.dev) 4 + jsdom |
 | Anti-spam | Cloudflare Turnstile |
 | Backend del formulario | `POST https://api.usagiteks.com/contact` (repo privado `usagitechs/contact-api`, Go + AWS Lambda). Configurable con `PUBLIC_CONTACT_API` |
@@ -25,7 +26,7 @@ Diagrama interactivo en [`docs/arquitectura.html`](docs/arquitectura.html) (fuen
 
 ## Desarrollo
 
-Requiere Node.js 22 o superior (`.nvmrc` fija 24) y **pnpm** (`corepack enable` lo instala en la versión fijada en `package.json`).
+Requiere Node.js 22 o superior (`.nvmrc` fija 24) y **pnpm** en la versión fijada en `package.json`: `corepack enable` la instala automáticamente; si tu Node no trae Corepack, `npm install -g pnpm@12.4.1`.
 
 ```bash
 pnpm install       # dependencias (respeta pnpm-lock.yaml)

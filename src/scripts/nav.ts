@@ -11,16 +11,18 @@ function initMobileNav(header: HTMLElement) {
   const nav = header.querySelector<HTMLElement>('[data-nav]');
   if (!toggle || !nav) return;
 
-  const setOpen = (open: boolean) => {
+  const setOpen = (open: boolean, returnFocus = false) => {
     header.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    document.body.style.overflow = open ? 'hidden' : '';
+    document.body.classList.toggle('nav-open', open);
+    // Disclosure pattern (WAI-ARIA APG): when closed from the keyboard, focus goes back to the trigger.
+    if (!open && returnFocus) toggle.focus();
   };
 
   toggle.addEventListener('click', () => setOpen(!header.classList.contains('is-open')));
   nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setOpen(false);
+    if (e.key === 'Escape' && header.classList.contains('is-open')) setOpen(false, true);
   });
   const desktop = window.matchMedia('(min-width: 851px)');
   const onChange = (e: MediaQueryListEvent) => {
