@@ -1,5 +1,7 @@
 ---
 import type { Lang } from '../i18n/config';
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
 import { localizedPath } from '../i18n/utils';
 import nav from '../i18n/sections/nav';
 import { site } from '../data/site';
@@ -18,7 +20,7 @@ const links = [
 <footer class="footer">
   <div class="container footer__inner">
     <div class="footer__brand">
-      <a href={localizedPath(lang)} aria-label={site.name}><img src="/logo.png" alt="" decoding="async" width="22" height="26" /></a>
+      <a href={localizedPath(lang)} aria-label={site.name}><Image src={logo} alt="" width={22} height={26} densities={[1, 2]} loading="eager" /></a>
       <span class="footer__name">{site.name}</span>
       <span>© <span data-year>{year}</span> · {t.footerRights}</span>
     </div>

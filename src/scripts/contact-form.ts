@@ -117,14 +117,17 @@ async function sendWithEmailJs(form: HTMLFormElement, data: Record<string, strin
     service: data.service || '-',
     message: data.message,
     lang: form.dataset.lang ?? '',
-    page: window.location.href,
+    // Origin + path only: query strings and hashes are attacker-controlled and would land verbatim in the email.
+    page: window.location.origin + window.location.pathname,
     time: new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' }),
   });
 }
 
 function init(): void {
-  const form = document.getElementById('contactForm') as HTMLFormElement | null;
-  if (!form) return;
+  const formEl = document.getElementById('contactForm') as HTMLFormElement | null;
+  if (!formEl) return;
+  // Non-null alias: narrowing does not flow into the hoisted helper functions below.
+  const form: HTMLFormElement = formEl;
 
   const messages = readMessages();
   if (!messages) return;
@@ -162,44 +165,74 @@ function init(): void {
     fallback?.setAttribute('hidden', '');
   }
 
+
+  /** Ties an error to its field (WCAG 3.3.1): aria-invalid + aria-describedby + inline text, plus the toast. */
+  function setFieldError(name: string, message: string): void {
+    const field = form.querySelector<HTMLElement>(`[name="${name}"]`);
+    const node = document.getElementById(`contact-${name}-error`);
+    if (field) {
+      field.setAttribute('aria-invalid', 'true');
+      if (node) field.setAttribute('aria-describedby', node.id);
+      field.focus();
+    }
+    if (node) {
+      node.textContent = message;
+      node.removeAttribute('hidden');
+    }
+    showToast('warning', message);
+  }
+
+  function clearFieldError(el: HTMLElement): void {
+    el.removeAttribute('aria-invalid');
+    el.removeAttribute('aria-describedby');
+    const name = el.getAttribute('name');
+    const node = name ? document.getElementById(`contact-${name}-error`) : null;
+    if (node) {
+      node.textContent = '';
+      node.setAttribute('hidden', '');
+    }
+  }
+
+  form.addEventListener('input', (event) => {
+    const el = event.target as HTMLElement | null;
+    if (el?.getAttribute('aria-invalid') === 'true') clearFieldError(el);
+  });
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (form.querySelector('button[type="submit"][aria-busy="true"]')) return;
+    form.querySelectorAll<HTMLElement>('[aria-invalid="true"]').forEach(clearFieldError);
 
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries()) as Record<string, string>;
 
     const nameError = validateName(data.name, messages);
     if (nameError) {
-      showToast('warning', nameError);
-      form.querySelector<HTMLElement>('[name="name"]')?.focus();
+      setFieldError('name', nameError);
       return;
     }
 
     const emailError = validateEmail(data.email, messages);
     if (emailError) {
-      showToast('warning', emailError);
-      form.querySelector<HTMLElement>('[name="email"]')?.focus();
+      setFieldError('email', emailError);
       return;
     }
 
     const messageError = validateMessage(data.message, messages);
     if (messageError) {
-      showToast('warning', messageError);
-      form.querySelector<HTMLElement>('[name="message"]')?.focus();
+      setFieldError('message', messageError);
       return;
     }
 
     const companyError = validateCompany(data.company, messages);
     if (companyError) {
-      showToast('warning', companyError);
-      form.querySelector<HTMLElement>('[name="company"]')?.focus();
+      setFieldError('company', companyError);
       return;
     }
 
     const serviceError = validateService(data.service, messages);
     if (serviceError) {
-      showToast('warning', serviceError);
-      form.querySelector<HTMLElement>('[name="service"]')?.focus();
+      setFieldError('service', serviceError);
       return;
     }
 
@@ -224,7 +257,9 @@ function init(): void {
     const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     const originalHtml = submitBtn?.innerHTML ?? '';
     if (submitBtn) {
-      submitBtn.disabled = true;
+      // aria-disabled + aria-busy keep the button focusable and announce the state; `disabled` would drop focus.
+      submitBtn.setAttribute('aria-disabled', 'true');
+      submitBtn.setAttribute('aria-busy', 'true');
       submitBtn.innerHTML = `${SPINNER_ICON}${messages.sendingLabel}`;
     }
 
@@ -271,7 +306,8 @@ function init(): void {
         window.turnstile?.reset();
       }
       if (submitBtn) {
-        submitBtn.disabled = false;
+        submitBtn.removeAttribute('aria-disabled');
+        submitBtn.removeAttribute('aria-busy');
         submitBtn.innerHTML = originalHtml;
       }
     }

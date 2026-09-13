@@ -5,7 +5,7 @@ const { lang } = Astro.props;
 import dict from '../i18n/sections/hero';
 const t = dict[lang];
 ---
-<section id="inicio" class="hero">
+<section id="inicio" class="hero" aria-labelledby="inicio-title">
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="hero__grid-bg" aria-hidden="true"></div>
 
@@ -16,7 +16,7 @@ const t = dict[lang];
         {t.eyebrow}
       </p>
 
-      <h1 class="hero__title">
+      <h1 id="inicio-title" class="hero__title">
         {t.title} <span class="text-gradient">{t.titleAccent}</span>
       </h1>
 

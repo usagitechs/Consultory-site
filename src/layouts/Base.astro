@@ -1,4 +1,7 @@
 ---
+// Self-hosted variable fonts: no request to Google, no IP disclosure, no render-blocking third-party CSS.
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import type { Lang } from '../i18n/config';
 import { langTags, defaultLang } from '../i18n/config';
@@ -21,6 +24,17 @@ const ogImage = new URL('/og.png', site.url).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Content Security Policy (GitHub Pages cannot send HTTP headers, so it lives here; frame-ancestors is
+      not supported via <meta>). script-src allows: our bundled scripts ('self'), the inline theme bootstrap
+      below by hash (recompute if its text changes: sha256 of the exact script body as built), EmailJS's
+      dynamic import (bundled, 'self'), and Cloudflare Turnstile in API mode. Fonts are self-hosted.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'sha256-e//vqr9nMiq8KghfS8nvyaJ5My7bTLRQWR4GQPrCQbQ=' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.emailjs.com https://api.usagiteks.com; frame-src https://challenges.cloudflare.com; base-uri 'none'; object-src 'none'; form-action 'self'"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>{t.title}</title>
     <meta name="description" content={t.description} />
     <meta name="author" content={site.name} />
@@ -45,12 +59,6 @@ const ogImage = new URL('/og.png', site.url).href;
     <meta name="theme-color" content="#07090f" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f7f8fb" media="(prefers-color-scheme: light)" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
 
     <!-- Apply the saved or system theme before first paint to avoid a flash. -->
     <script is:inline>
@@ -66,9 +74,9 @@ const ogImage = new URL('/og.png', site.url).href;
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#inicio">{n.skip}</a>
+    <a class="skip-link" href="#main">{n.skip}</a>
     <Header lang={lang} />
-    <main id="main">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer lang={lang} />
